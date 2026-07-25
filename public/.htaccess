@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Rewrite Next.js client-side prefetch requests (3-dot nested paths)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)__next\.([^.]+)\.([^.]+)\.([^.]+)\.txt$ $1__next.$2/$3/$4.txt [L]
+
+  # 2. Rewrite Next.js client-side prefetch requests (2-dot nested paths)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)__next\.([^.]+)\.([^.]+)\.txt$ $1__next.$2/$3.txt [L]
+
+  # 3. Fallback to index.html for clean URLs and static routing
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
