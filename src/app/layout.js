@@ -44,6 +44,8 @@ export default async function RootLayout({ children }) {
         {settings.gsc_verification && (
           <meta name="google-site-verification" content={settings.gsc_verification} />
         )}
+        {/* Static GSC fallback - Replace with your actual verification code */}
+        <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
 
         {/* Google Tag Manager - Head Script */}
         {settings.gtm_id && (

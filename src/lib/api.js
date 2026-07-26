@@ -26,8 +26,22 @@ export async function getLatestBlogs() {
   return res.json();
 }
 
-export async function getLatestJobs() {
-  const res = await fetch(`${API_URL}/get-latest-jobs`, { next: { revalidate: 300 } });
-  if (!res.ok) return [];
-  return res.json();
+export async function getLatestJobs(limit = 10) {
+  try {
+    const res = await fetch(`${API_URL}/get-latest-jobs?limit=${limit}`, { 
+      next: { revalidate: 300 },
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    if (!res.ok) {
+      console.error(`Get latest jobs failed with status ${res.status}`);
+      return [];
+    }
+    const data = await res.json();
+    return Array.isArray(data) ? data : data.data || [];
+  } catch (error) {
+    console.error('Error fetching latest jobs:', error);
+    return [];
+  }
 }
