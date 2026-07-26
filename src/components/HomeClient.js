@@ -176,7 +176,7 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
                 <div className="row align-items-center">
                   <div className="col-md-8">
                     <h4 className="mb-1">
-                      <Link href={`/jobs/${slug}`} className="text-decoration-none text-dark hover:text-[#126ebb] transition-all font-bold">
+                      <Link href='https://jobs.hirix.com.pk' className="text-decoration-none text-dark hover:text-[#126ebb] transition-all font-bold">
                         {title}
                       </Link>
                     </h4>
@@ -190,7 +190,7 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
                     </div>
                   </div>
                   <div className="col-md-4 text-end mt-3 mt-md-0">
-                    <Link href={`/jobs/${slug}`} className="btn btn-primary">Apply Now</Link>
+                    <Link href='https://jobs.hirix.com.pk' className="btn btn-primary">Apply Now</Link>
                   </div>
                 </div>
               </motion.div>
