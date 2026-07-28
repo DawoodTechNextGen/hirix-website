@@ -159,14 +159,16 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
               salary = job.salary;
             } else if (job.min_salary) {
               salary = `PKR ${job.min_salary.toLocaleString("en-PK")} - ${job.max_salary.toLocaleString("en-PK")} / Month`;
+            } else if (job.minimum_currency) {
+              salary = `Starting from ${job.minimum_currency} ${(job.currency || "PKR").toUpperCase()}`;
             }
             
-            const slug = job.slug || job.id;
+            const applyUrl = job.portal_apply_url || `https://jobs.hirix.com.pk/JobPage/${job.id}`;
 
             return (
               <motion.div 
                 className="job-card" 
-                key={job.id}
+                key={job.id || idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -176,12 +178,12 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
                 <div className="row align-items-center">
                   <div className="col-md-8">
                     <h4 className="mb-1">
-                      <Link href='https://jobs.hirix.com.pk' className="text-decoration-none text-dark hover:text-[#126ebb] transition-all font-bold">
+                      <a href={applyUrl} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-dark hover:text-[#126ebb] transition-all font-bold">
                         {title}
-                      </Link>
+                      </a>
                     </h4>
                     <div className="mb-2">
-                      <span className="text-muted me-3"><i className="fa-regular fa-building me-1"></i> {company}</span>
+                      {company && <span className="text-muted me-3"><i className="fa-regular fa-building me-1"></i> {company}</span>}
                       <span className="text-muted"><i className="fa-solid fa-location-dot me-1"></i> {location}</span>
                     </div>
                     <div className="d-flex gap-2">
@@ -190,7 +192,7 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
                     </div>
                   </div>
                   <div className="col-md-4 text-end mt-3 mt-md-0">
-                    <Link href='https://jobs.hirix.com.pk' className="btn btn-primary">Apply Now</Link>
+                    <a href={applyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Apply Now</a>
                   </div>
                 </div>
               </motion.div>
