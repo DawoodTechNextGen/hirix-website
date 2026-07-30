@@ -29,19 +29,32 @@ export async function getLatestBlogs() {
 export async function getLatestJobs(limit = 10) {
   try {
     const res = await fetch(`${API_URL}/get-latest-jobs?limit=${limit}`, { 
-      next: { revalidate: 300 },
+      next: { revalidate: 60 },
       headers: {
         'Content-Type': 'application/json',
       }
     });
-    if (!res.ok) {
-      console.error(`Get latest jobs failed with status ${res.status}`);
-      return [];
+    if (res.ok) {
+      const data = await res.json();
+      const jobs = Array.isArray(data) ? data : data.data || [];
+      if (jobs.length > 0) return jobs;
     }
-    const data = await res.json();
-    return Array.isArray(data) ? data : data.data || [];
   } catch (error) {
     console.error('Error fetching latest jobs:', error);
-    return [];
   }
+
+  // Fallback to /get-posts endpoint if /get-latest-jobs endpoint has backend SQL collation error
+  try {
+    const fallbackRes = await fetch(`${API_URL}/get-posts?limit=${limit}`, {
+      next: { revalidate: 60 }
+    });
+    if (fallbackRes.ok) {
+      const fallbackData = await fallbackRes.json();
+      return fallbackData?.data?.jobs || [];
+    }
+  } catch (err) {
+    console.error('Error fetching fallback jobs:', err);
+  }
+
+  return [];
 }
