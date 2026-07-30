@@ -22,40 +22,50 @@ export async function generateStaticParams() {
 
 // RankMath-like Dynamic generateMetadata
 export async function generateMetadata({ params }) {
-  const resolvedParams = await params;
-  const blog = await getBlogBySlug(resolvedParams.slug);
-  if (!blog) return { title: "Not Found" };
+  try {
+    const resolvedParams = await params;
+    const blog = await getBlogBySlug(resolvedParams.slug);
+    if (!blog) return { title: "Hirix Blog" };
 
-  return {
-    title: blog.seo_title || blog.title,
-    description: blog.meta_description || "",
-    keywords: blog.tags ? blog.tags.split(",").map((t) => t.trim()) : [],
-    alternates: {
-      canonical: blog.canonical_url || `https://hirix.com.pk/blog/${blog.slug}`,
-    },
-    openGraph: {
+    return {
       title: blog.seo_title || blog.title,
       description: blog.meta_description || "",
-      url: `https://hirix.com.pk/blog/${blog.slug}`,
-      type: "article",
-      images: blog.og_image
-        ? [{ url: blog.og_image }]
-        : blog.cover_image
-        ? [{ url: blog.cover_image }]
-        : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: blog.seo_title || blog.title,
-      description: blog.meta_description || "",
-      images: blog.og_image || blog.cover_image || [],
-    },
-  };
+      keywords: blog.tags ? blog.tags.split(",").map((t) => t.trim()) : [],
+      alternates: {
+        canonical: blog.canonical_url || `https://hirix.com.pk/blog/${blog.slug}`,
+      },
+      openGraph: {
+        title: blog.seo_title || blog.title,
+        description: blog.meta_description || "",
+        url: `https://hirix.com.pk/blog/${blog.slug}`,
+        type: "article",
+        images: blog.og_image
+          ? [{ url: blog.og_image }]
+          : blog.cover_image
+          ? [{ url: blog.cover_image }]
+          : [],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: blog.seo_title || blog.title,
+        description: blog.meta_description || "",
+        images: blog.og_image || blog.cover_image || [],
+      },
+    };
+  } catch (err) {
+    return { title: "Hirix Blog" };
+  }
 }
 
 export default async function BlogDetailPage({ params }) {
   const resolvedParams = await params;
-  const blog = await getBlogBySlug(resolvedParams.slug);
+  let blog = null;
+  try {
+    blog = await getBlogBySlug(resolvedParams.slug);
+  } catch (err) {
+    console.error("Error fetching blog slug:", err);
+  }
+
   if (!blog) return notFound();
 
   let recentBlogs = [];

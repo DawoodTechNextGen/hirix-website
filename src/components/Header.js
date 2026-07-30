@@ -14,7 +14,13 @@ export default function Header() {
       <div className="container d-flex align-items-center justify-content-between">
         {/* Logo */}
         <Link href="/" className="d-flex align-items-center text-decoration-none">
-          <img src="/logo.png" alt="Hirix Logo" style={{ height: "45px", width: "auto", objectFit: "contain" }} />
+          <img 
+            src="/logo.png" 
+            alt="Hirix Logo" 
+            width={140} 
+            height={45} 
+            style={{ height: "45px", width: "auto", objectFit: "contain" }} 
+          />
         </Link>
 
         {/* Desktop Navigation */}

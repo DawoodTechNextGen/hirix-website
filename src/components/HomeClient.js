@@ -109,8 +109,8 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
       {/* POPULAR CATEGORIES */}
       <section className="container py-5">
         <div className="text-center mb-5">
-          <h2>Explore popular job categories</h2>
-          <p className="text-muted">Find opportunities in trending fields and specialized skills in Pakistan</p>
+          <h2 className="text-gray-900 font-bold">Explore popular job categories</h2>
+          <p className="text-gray-600">Find opportunities in trending fields and specialized skills in Pakistan</p>
         </div>
         <div className="row">
           {[
@@ -129,8 +129,8 @@ export default function HomeClient({ latestBlogs, latestJobs, settings }) {
                 viewport={{ once: true }}
               >
                 <div className="category-icon"><i className={`fa-solid ${cat.icon}`}></i></div>
-                <h4>{cat.title}</h4>
-                <p className="text-muted mb-0">{cat.count}</p>
+                <h3 className="h4 text-gray-900 font-bold">{cat.title}</h3>
+                <p className="text-gray-600 mb-0">{cat.count}</p>
               </motion.div>
             </div>
           ))}

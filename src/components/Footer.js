@@ -30,7 +30,13 @@ export default async function Footer() {
         <div className="row">
           <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div className="mb-4">
-              <img src="/logo.png" alt="Hirix Logo" style={{ height: "30px", width: "auto", filter: "brightness(0) invert(1)" }} />
+              <img 
+                src="/logo.png" 
+                alt="Hirix Logo" 
+                width={120} 
+                height={30} 
+                style={{ height: "30px", width: "auto", filter: "brightness(0) invert(1)" }} 
+              />
             </div>
             <p className="mb-4">{settings.site_meta_description || settings.site_description || settings.meta_description || settings.seo_description || "Hirix is Pakistan's leading job search and career platform, matching top-tier talent with the country's best companies. Build your future with ease."}</p>
             
@@ -60,23 +66,23 @@ export default async function Footer() {
 
             <div className="social-links">
               {facebookUrl && (
-                <a href={facebookUrl} target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-facebook-f"></i>
+                <a href={facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit Hirix on Facebook">
+                  <i className="fab fa-facebook-f" aria-hidden="true"></i>
                 </a>
               )}
               {twitterUrl && (
-                <a href={twitterUrl} target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-twitter"></i>
+                <a href={twitterUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit Hirix on Twitter">
+                  <i className="fab fa-twitter" aria-hidden="true"></i>
                 </a>
               )}
               {linkedinUrl && (
-                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-linkedin-in"></i>
+                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit Hirix on LinkedIn">
+                  <i className="fab fa-linkedin-in" aria-hidden="true"></i>
                 </a>
               )}
               {instagramUrl && (
-                <a href={instagramUrl} target="_blank" rel="noopener noreferrer">
-                  <i className="fab fa-instagram"></i>
+                <a href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit Hirix on Instagram">
+                  <i className="fab fa-instagram" aria-hidden="true"></i>
                 </a>
               )}
             </div>

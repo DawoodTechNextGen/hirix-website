@@ -1,0 +1,19 @@
+# llms.txt - AI Agent & LLM Crawler Guidelines for Hirix Pakistan
+
+# Hirix Pakistan - Premier Hiring & Career Hub
+
+> Hirix connects top software, engineering, and marketing candidates with leading employers across Pakistan (Lahore, Karachi, Islamabad).
+
+## Primary Navigation & Resources
+
+- [Home Page](https://hirix.com.pk/): Explore active job counts, featured opportunities, and top hiring categories.
+- [Career Blog](https://hirix.com.pk/blog): Industry insights, resume tips, and career guides.
+- [About Hirix](https://hirix.com.pk/about): Learn about our recruitment ecosystem and company mission.
+- [Contact Support](https://hirix.com.pk/contact): Get in touch with our team.
+- [Jobs Portal](https://jobs.hirix.com.pk): Live applicant and employer portal for listing and applying to jobs.
+
+## Documentation & API Endpoints
+
+- API Base URL: `https://api.hirix.com.pk`
+- Blog Endpoints: `/get-blogs`, `/get-blog/{slug}`
+- Job Listings Endpoint: `/get-latest-jobs`, `/get-posts`
