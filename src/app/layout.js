@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageProgressBar from "@/components/PageProgressBar";
 import { getSiteSettings } from "@/lib/api";
 import Script from "next/script";
 
@@ -84,6 +85,7 @@ export default async function RootLayout({ children }) {
           </noscript>
         )}
         <Header />
+        <PageProgressBar />
         {children}
         <Footer />
       </body>
