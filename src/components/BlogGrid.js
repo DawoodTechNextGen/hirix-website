@@ -28,16 +28,6 @@ export default function BlogGrid({ blogs }) {
                   </Link>
                 </h4>
                 <p className="text-muted small mb-4">{blog.meta_description}</p>
-                
-                {blog.tags && (
-                  <div className="blog-tags mb-3 d-flex flex-wrap gap-1">
-                    {blog.tags.split(",").map((tag) => (
-                      <span key={tag.trim()} className="badge bg-light text-muted border text-xs">
-                        #{tag.trim()}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </div>
 
               <div className="text-muted small d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
