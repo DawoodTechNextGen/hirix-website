@@ -58,6 +58,15 @@ export default async function BlogDetailPage({ params }) {
   const blog = await getBlogBySlug(resolvedParams.slug);
   if (!blog) return notFound();
 
+  let recentBlogs = [];
+  try {
+    const blogsRes = await getBlogs(1, 6);
+    const allBlogs = blogsRes && Array.isArray(blogsRes.data) ? blogsRes.data : [];
+    recentBlogs = allBlogs.filter((b) => b.slug !== resolvedParams.slug).slice(0, 5);
+  } catch (err) {
+    console.error("Error fetching recent blogs:", err);
+  }
+
   return (
     <>
       {/* Blog Article Banner */}
@@ -72,17 +81,18 @@ export default async function BlogDetailPage({ params }) {
             {blog.title}
           </h1>
           <p className="text-muted small" suppressHydrationWarning>
-            Published on {new Date(blog.created_at).toLocaleDateString("en-PK", {
+            Published on {new Date(blog.created_at || blog.updated_at).toLocaleDateString("en-PK", {
               year: "numeric", month: "long", day: "numeric"
             })}
           </p>
         </div>
       </section>
 
-      {/* Main Content Area */}
+      {/* Main Content Area with Sidebar */}
       <article className="container py-5">
-        <div className="row justify-content-center">
-          <div className="col-lg-8 col-md-10">
+        <div className="row g-4">
+          {/* Main Article Content */}
+          <div className="col-lg-8">
             {/* Back Button */}
             <div className="mb-4">
               <Link href="/blog" className="text-[#126ebb] font-semibold text-sm hover:underline d-inline-flex align-items-center text-decoration-none">
@@ -99,10 +109,6 @@ export default async function BlogDetailPage({ params }) {
                   style={{ maxHeight: "450px" }}
                 />
               </div>
-            )}
-
-            {blog.focus_keyword && (
-              <p className="focus-keyword text-muted mb-4">Focus Keyword: <strong>{blog.focus_keyword}</strong></p>
             )}
 
             {/* Render HTML content safely */}
@@ -129,6 +135,49 @@ export default async function BlogDetailPage({ params }) {
               <a href="https://jobs.hirix.com.pk" className="btn btn-primary px-4 py-2.5 font-semibold text-sm shadow-sm">
                 Get Started Now <i className="fa-solid fa-arrow-right ms-1"></i>
               </a>
+            </div>
+          </div>
+
+          {/* Right Sidebar - Recent Articles */}
+          <div className="col-lg-4">
+            <div className="sticky-top" style={{ top: "100px" }}>
+              <div className="card border-0 shadow-sm rounded-3 p-4 bg-light">
+                <h4 className="fw-bold mb-4 border-bottom pb-2 text-dark fs-5">
+                  Recent Articles
+                </h4>
+                {recentBlogs.length > 0 ? (
+                  <div className="d-flex flex-column gap-3">
+                    {recentBlogs.map((recent) => (
+                      <div key={recent.id} className="border-bottom pb-3">
+                        <span className="badge bg-primary text-white text-xs mb-1">
+                          {recent.category || "Career Advice"}
+                        </span>
+                        <h6 className="mb-1">
+                          <Link 
+                            href={`/blog/${recent.slug}`} 
+                            className="text-dark fw-semibold text-decoration-none hover:text-[#126ebb] transition-all line-clamp-2"
+                          >
+                            {recent.title}
+                          </Link>
+                        </h6>
+                        <small className="text-muted" suppressHydrationWarning>
+                          {new Date(recent.created_at || recent.updated_at).toLocaleDateString("en-PK", {
+                            month: "short", day: "numeric", year: "numeric"
+                          })}
+                        </small>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted small">No other recent articles found.</p>
+                )}
+                
+                <div className="mt-4 text-center">
+                  <Link href="/blog" className="btn btn-outline-primary btn-sm w-100 font-semibold">
+                    View All Articles
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
